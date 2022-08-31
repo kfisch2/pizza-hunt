@@ -12,13 +12,13 @@ const ReplySchema = new Schema(
     },
     replyBody: {
       type: String,
-      required: 'Please enter something', 
-      trim: true
+      required: "Please enter something",
+      trim: true,
     },
     writtenBy: {
       type: String,
-      required: true, 
-      trim: true
+      required: true,
+      trim: true,
     },
     createdAt: {
       type: Date,
@@ -30,7 +30,6 @@ const ReplySchema = new Schema(
     toJSON: {
       getters: true,
     },
-    id: false,
   }
 );
 
@@ -38,9 +37,13 @@ const CommentSchema = new Schema(
   {
     writtenBy: {
       type: String,
+      required: true,
+      trim: true,
     },
     commentBody: {
       type: String,
+      required: true,
+      trim: true,
     },
     createdAt: {
       type: Date,
@@ -58,6 +61,7 @@ const CommentSchema = new Schema(
       // dateFormat util
       getters: true,
     },
+    id: false,
   }
 );
 CommentSchema.virtual("replyCount").get(function () {

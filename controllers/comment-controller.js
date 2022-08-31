@@ -9,7 +9,7 @@ const commentController = {
           { _id: params.pizzaId },
           // $ indicates a mongoDB method
           { $push: { comments: _id } },
-          { new: true }
+          { new: true, runValidators: true }
         );
       })
       .then((dbPizzaData) => {
@@ -26,7 +26,7 @@ const commentController = {
     Comment.findOneAndUpdate(
       { _id: params.commentId },
       { $push: { replies: body } },
-      { new: true }
+      { new: true, runValidators: true }
     ).then((dbPizzaData) => {
       if (!dbPizzaData) {
         res.status(404).json({ message: "Pizza with that id not found" });
@@ -38,12 +38,12 @@ const commentController = {
 
   removeReply({ params }, res) {
     Comment.findOneAndUpdate(
-      {_id: params.commentId},
-      { $pull: {replies: {replyId: params.replyId} } },
+      { _id: params.commentId },
+      { $pull: { replies: { replyId: params.replyId } } },
       { new: true }
     )
-    .then(dbPizzaData => re.json(dbPizzaData))
-    .catch(err => res.json(err))
+      .then((dbPizzaData) => re.json(dbPizzaData))
+      .catch((err) => res.json(err));
   },
 
   removeComment({ params }, res) {
