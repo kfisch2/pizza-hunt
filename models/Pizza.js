@@ -5,9 +5,13 @@ const PizzaSchema = new Schema(
   {
     pizzaName: {
       type: String,
+      required: 'You need to name your pizza!',
+      trim: true
     },
     createdBy: {
       type: String,
+      required: true,
+      trim: true
     },
     createdAt: {
       type: Date,
@@ -17,6 +21,10 @@ const PizzaSchema = new Schema(
     },
     size: {
       type: String,
+      required: true,
+      // possible options for this field
+      // enum = enumerable which means a set of data that can be iterated over (e.g. for... in loops)
+      enum: ['Personal', 'Small', 'Large', 'Extra large'],
       default: "Large",
     },
     toppings: [],
