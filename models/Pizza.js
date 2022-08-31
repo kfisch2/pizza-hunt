@@ -1,5 +1,5 @@
 const { Schema, model } = require("mongoose");
-const dateFormat = require('../utils/dateFormat')
+const dateFormat = require("../utils/dateFormat");
 
 const PizzaSchema = new Schema(
   {
@@ -13,7 +13,7 @@ const PizzaSchema = new Schema(
       type: Date,
       default: Date.now,
       // this option allos us to format the timestamp value
-      get: (createdAtVal) => dateFormat(createdAtVal)
+      get: (createdAtVal) => dateFormat(createdAtVal),
     },
     size: {
       type: String,
@@ -31,7 +31,7 @@ const PizzaSchema = new Schema(
     toJSON: {
       virtuals: true,
       // tells mongoose that it should use getter functions we've specified
-      getters: true
+      getters: true,
     },
     id: false,
   }
@@ -39,7 +39,13 @@ const PizzaSchema = new Schema(
 
 // get total count of comments and replies on retrieval
 PizzaSchema.virtual("commentCount").get(function () {
-  return this.comments.length;
+  return this.comments.reduce((total, comment) => total + comment.replies.length + 1, 0);
+
+    // reduce() tallies up total of every comment with its replies
+  // takes two parameters: an accumulator and currentValue
+  // as .reduce() walks through the array, it passes accumulating total and current val of comment
+  // into the function, with the return of the function revising the total for the next interation through arr
+  // .reduce() is great for getting sum of multiple values
 });
 
 // create the pizza model with PizzaSchema
